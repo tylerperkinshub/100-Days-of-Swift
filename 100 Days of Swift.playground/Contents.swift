@@ -336,23 +336,220 @@ while true {
 
 /// Day 5
 
+// Writing functions
+func printHelp() {
+    let message = """
+Welcome to MyApp!
+
+Run this app inside a firectory of images and
+MyApp will resize all into thumbnails
+"""
+    print(message)
+}
+
+printHelp()
+
+//Accepting parameters
+func square(number: Int){
+    print(number * number)
+}
+square(number: 8)
+
+//Returning Values
+func squared(number: Int) -> Int {
+    return number * number
+}
+
+let squaredResult = squared(number: 8)
+print(squaredResult)
+
+// Parameter Labels
+func sayHello(to name: String) {
+    print("Hello, \(name)")
+}
+
+sayHello(to: "Taylor")
+
+// Omitting Paramete labels
+func greet(_ person: String) {
+    print("Hello, \(person)")
+}
+
+greet("Taylor")
+
+
+// Default pearameters
+func greetNewPerson(_ person: String, nicely: Bool = true) {
+    if nicely == true {
+        print("Hello, \(person)")
+    } else {
+        print("Oh no, it's \(person) again...")
+    }
+}
+
+greet("Steve")
+greetNewPerson("Taylor", nicely: false)
+
+// Variadic function
+print("Haters", "gonna", "hate")
+
+func varadicSquared(numbers: Int...){
+    for number in numbers {
+        print("\(number) squared is \(number * number)")
+    }
+}
+
+varadicSquared(numbers: 1, 2, 3, 4, 5)
+
+// Throwing functions
+enum PasswordError: Error {
+    case obvious
+}
+
+func checkPassword(_ password: String) throws -> Bool {
+    if password == "password" {
+        throw PasswordError.obvious
+    }
+    return true
+}
 
 
 
+// Throwing functions
+do {
+    try checkPassword("password")
+    print("That password is good!")
+} catch {
+    print("You can't use that password.")
+}
+// In the example above print("That password is good!") will never get called because it fails the try
 
+// inout Parameters
+func doubleInPlace(number: inout Int) {
+    number *= 2
+}
 
+var myNum = 10
+doubleInPlace(number: &myNum)
 
+/// Day 6
 
+// Creating basic closures
+let driving = {
+    print("I'm driving my car")
+}
+driving()
 
+// Accepting parameters in a closure
+let acceptingDriving = { (place: String) in
+    print("I'm going to \(place) in my car")
+}
 
+acceptingDriving("London")
 
+// Returning values from a closure
+let drivingWithReturn = { (place: String) -> String in
+    return "I'm going to \(place) in my car"
+}
+let message = drivingWithReturn("Paris")
+print(message)
 
+//Closures as parameters
+func travel(action: () -> Void) {
+    print("I'm getting ready to go")
+    action()
+    print("I arrived!")
+}
 
+travel(action: driving)
 
+// Trailing closure syntax
+func travelAsClosure(action: () -> Void) {
+    print("I'm getting ready to go")
+    action()
+    print("I arrived!")
+}
 
+travelAsClosure {
+    print("I'm driving in my jet.")
+}
 
+/// Day 6
+// Closures as parameters when they accept parameters
+func travelWithClosureAsParameters(action: (String) -> Void) {
+    print("I'm getting ready to go.")
+    action("Berlin")
+    print("I arrived")
+}
 
+travelWithClosureAsParameters { (place: String) in
+    print("I'm going to \(place) in my car")
+}
 
+// Closures as parameters with return values
+func travelWithParametersWithReturnValue(action: (String) -> String) {
+    print("I'm getting ready to go.")
+    let description = action("Barcelona")
+    print(description)
+    print("I've arrived!")
+}
+
+travelWithParametersWithReturnValue { (place: String) -> String in
+    
+    return "I'm going to \(place) in my car"
+    
+}
+
+// Shorthand parameter names
+func travelWithShorthand(action: (String) -> String) {
+    print("I'm getting ready to go.")
+    let description = action("Liverpool")
+    print(description)
+    print("I arrived!")
+}
+
+travelWithShorthand {
+    "I'm going to \($0) in my car"
+}
+
+// Closures with multiple parameters
+func travelWithMultipleParams (action: (String, Int) -> String) {
+    print("I'm getting ready to go.")
+    let description = action("London", 60)
+    print(description)
+    print("I arrived")
+}
+
+travelWithMultipleParams {
+    "I'm going to \($0) at \($1) miles per hour"
+}
+
+// Returning closures
+func travelWithReturningFunction() -> (String) -> Void {
+    return {
+        print("I'm going to \($0)")
+    }
+}
+
+let travelResult = travelWithReturningFunction()
+travelResult("London")
+
+let travelResult2 = travelWithReturningFunction()("London")
+
+// Capturing values
+func travelWithCapturingValue() -> (String) -> Void {
+    var counter = 1
+    
+    return {
+        print("\(counter). I'm going to \($0)" )
+        counter += 1
+    }
+}
+
+let resultCV = travelWithCapturingValue()
+resultCV("Paris")
+resultCV("Paris")
+resultCV("Paris")
 
 
 
