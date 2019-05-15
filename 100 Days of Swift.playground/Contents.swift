@@ -474,7 +474,7 @@ travelAsClosure {
     print("I'm driving in my jet.")
 }
 
-/// Day 6
+/// Day 7
 // Closures as parameters when they accept parameters
 func travelWithClosureAsParameters(action: (String) -> Void) {
     print("I'm getting ready to go.")
@@ -638,21 +638,87 @@ toys.firstIndex(of: "Buzz")
 print(toys.sorted())
 toys.remove(at: 0)
 
-/// Day 9 
+/// Day 9
+
+// Initializers
+struct User {
+    var username: String
+
+    init() {
+        username = "Anonymous"
+        print("Creating new user!")
+    }
+}
 
 
+var user = User()
+user.username = "twostraws"
+
+// Referring to the current instance
+
+struct PersonWithCurrentInstance {
+    var name: String
+    
+    init(name: String) {
+        print("\(name) was born")
+        self.name = name
+    }
+}
+
+// Lazy Property
+struct FamilyTree {
+    init() {
+        print("Creating family tree")
+    }
+}
+
+struct PersonWithLazyProp {
+    var name: String
+    lazy var familyTree = FamilyTree()
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+var ed = PersonWithLazyProp(name: "Ed")
+ed.familyTree
+
+// Static properties and methods
+struct Student {
+    static var classSize = 0
+    var name: String
+    
+    
+    init(name: String) {
+        self.name = name
+        Student.classSize += 1
+    }
+}
+
+let tyler = Student(name: "Tyler")
+let joe = Student(name: "Joe")
+
+print(Student.classSize)
+
+// Access control
+
+struct PersonAccessControl {
+    private var id: String
+    
+    init(id: String) {
+        self.id = id
+    }
+    
+    func identify() -> String {
+        return "My social security number is \(id)"
+    }
+}
+
+let steve = PersonAccessControl(id: "12345")
 
 
-
-
-
-
-
-
-
-
-
-
+/// Day 10
 
 
 
